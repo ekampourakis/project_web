@@ -1,0 +1,39 @@
+CREATE SCHEMA IF NOT EXISTS `crowd` DEFAULT CHARACTER SET utf8 ;
+USE `crowd` ;
+
+DROP TABLE IF EXISTS `crowd`.`data` ;
+CREATE TABLE IF NOT EXISTS `crowd`.`data` (
+  `userid` VARCHAR(255) NOT NULL,
+  `heading` INT(11) ,
+  `activity_type` VARCHAR(45) NULL DEFAULT NULL,
+  `activity_confidence` TINYINT(3) UNSIGNED NULL DEFAULT NULL,
+  `activity_timestampMs` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
+  `verticalAccuracy` INT(10) UNSIGNED ,
+  `velocity` INT(10) UNSIGNED ,
+  `accuracy` INT(10) UNSIGNED NOT NULL,
+  `longitudeE7` INT(11) NOT NULL,
+  `latitudeE7` INT(11) NOT NULL,
+  `altitude` INT(11) ,
+  `timestampMs` BIGINT(20) UNSIGNED NOT NULL,
+  `timestampUpload` BIGINT(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`timestampMs`, `userid`),
+  INDEX `fk_data_users_idx` (`userid` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+DROP TABLE IF EXISTS `crowd`.`users` ;
+CREATE TABLE IF NOT EXISTS `crowd`.`users` (
+  `userid` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `type` TINYINT(4) NOT NULL DEFAULT '1',
+  `firstname` VARCHAR(45) NOT NULL,
+  `lastname` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`userid`),
+  UNIQUE INDEX `userid_UNIQUE` (`userid` ASC),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+INSERT INTO `crowd`.`users` (userid, username, password, email, type, firstname, lastname) VALUES ('bjGbnD/wvD0ny/KJP11dqiKUCU3yZHgWz/p2tg==', 'admin', 'acb8415887ed5875330bfac6a3a5a88b', 'ekampourakis@ceid.upatras.gr', 0, 'Εμμανουήλ', 'Καμπουράκης');
